@@ -1,0 +1,11 @@
+body {
+    background-color: lightgray;
+    height: 100%;
+    margin:0px;
+    color:black;
+    font-family:'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+.dashBorder {border-style: dashed !important;}
+

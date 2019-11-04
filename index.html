@@ -14,13 +14,13 @@
         <div class= "container bg-white rounded">
             <div class = "row ml-3 pt-5 p-0">
                 <div class = "col-sm-6 m-0 p-0">
-                    <h2>Generate a password</h2>
+                    <h3>Generate a password</h3>
                 </div>
             </div>
             <div class = "row ml-3 mr-3 pl-o pr-0 pt-3 pb-3 border-top border-bottom">
                     <div class = "col-sm-12 m-0 p-0">
                     <div class= "container border dashBorder rounded">
-                        <p class = "pt-2 text-center" id = "displayText">Your secure password.</p>
+                        <input class = "col-sm-12 text-center noBorder" id = "displayText" placeholder ="Your secure password." readonly value = "">
                     </div>
                 </div>
             </div>
@@ -29,13 +29,13 @@
                     <button class = "btn btn-danger" onclick="onRequestClick()" >Generate Password</button>
                 </div>
                 <div class = "col-sm-6 p-2 text-center">
-                    <button class = "btn btn-danger disabled" id = "copyButton" onclick="onClipboardClick()">Copy to Clipboard</button>
+                    <button class = "btn btn-danger" disabled id = "copyButton" onclick="onClipboardClick()">Copy to Clipboard</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
+    <script type="text/javascript">
 
         var upperList = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
         var lowerList = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];    
@@ -46,6 +46,8 @@
             var myLength = prompt ("Enter desired password length between 8 and 128 characters.");
 
             myLength = parseInt(myLength);
+
+            window.toClipboard = ""
 
             if (myLength > 7 && myLength < 129)
                 {   
@@ -66,13 +68,9 @@
                         var newChar = tempList[Math.floor(Math.random() * tempList.length)];
                         pwString = pwString + newChar;
                     }
-                    document.getElementById("displayText").innerHTML = pwString;
+                    document.getElementById("displayText").value = pwString;
 
-                    //document.getElementById("copyButton").disabled = false;
-
-                    //pwString.value = text;
-                    pwString.select(); 
-                    document.execCommand("copy");
+                    document.getElementById("copyButton").disabled = false;
 
                 }
             else {alert ("Only numbers between 8 and 128 are excepted. Try again.")}
@@ -80,8 +78,8 @@
 
         function onClipboardClick()
         {
-            pwString.value = text;
-            pwString.select(); 
+            var tempToClip = document.getElementById("displayText");
+            tempToClip.select();
             document.execCommand("copy");
         }
 

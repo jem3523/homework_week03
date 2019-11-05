@@ -9,14 +9,18 @@
     <title>Passport Generator</title>
 </head>
 <body>
+    <!-- create a container the encompasses the page and includes the heading-->
     <div class = "container pt-3">
         <h1 class="text-center pb-3">Password Generator</h1>
+        <!-- create a container with rows for the remaining elements on the page-->
         <div class= "container bg-white rounded">
+            <!-- first row is for a subtitle/instruction-->
             <div class = "row ml-3 pt-5 p-0">
                 <div class = "col-sm-6 m-0 p-0">
                     <h3>Generate a password</h3>
                 </div>
             </div>
+            <!-- second row is for the output area, which requires another embedded container to crate the dotted outline look -->
             <div class = "row ml-3 mr-3 pl-o pr-0 pt-3 pb-3 border-top border-bottom">
                     <div class = "col-sm-12 m-0 p-0">
                     <div class= "container border dashBorder rounded">
@@ -25,6 +29,7 @@
                 </div>
             </div>
             <div class = "row p-5">
+                <!-- the final row contains two centered buttons, the copy-to-clipboard button is not active until the generate-password button/function runs -->
                 <div class = "col-sm-6 p-2 text-center">
                     <button class = "btn btn-danger" onclick="onRequestClick()" >Generate Password</button>
                 </div>
@@ -36,7 +41,7 @@
     </div>
 
     <script type="text/javascript">
-
+        // create an array for each of the optional character lists
         var upperList = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
         var lowerList = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];    
         var specialList = ["!","@","#","$","%","^","&","*"];
@@ -44,40 +49,47 @@
         function onRequestClick()
         {
             var myLength = prompt ("Enter desired password length between 8 and 128 characters.");
-
+            // convert the string fro the prompt into an integer
             myLength = parseInt(myLength);
 
-            window.toClipboard = ""
-
+            //check that the length is between 8 and 128
             if (myLength > 7 && myLength < 129)
                 {   
+                    //establish a base array of characters that are NOT optional
+                    var tempList = ["0","1","2","3","4","5","6","7","8","9"];
+
                     var includeUpper = confirm("Should your password include uppercase characters?");
                     var includeLower = confirm("Should your password include lowercase characters?");
                     var includeSpecial = confirm("Should your password include special characters?");
 
-                    var tempList = ["0","1","2","3","4","5","6","7","8","9"];
-
+                    //for the TRUE answer to each prompt, add the arrays held outside the function
                     if (includeUpper) {tempList = tempList.concat(upperList);};
                     if (includeLower) {tempList = tempList.concat(lowerList);};
                     if (includeSpecial) {tempList = tempList.concat(specialList);};
 
                     var pwString = "";
 
+                    //randomly pic for the array characters, one during each loop, until you hit the string length from the first prompt
                     for (i=0; i<myLength; i++)
                     {
                         var newChar = tempList[Math.floor(Math.random() * tempList.length)];
                         pwString = pwString + newChar;
                     }
+
+                    //display the final password, replacing the placeholder text
                     document.getElementById("displayText").value = pwString;
 
+                    //change the state of the copy button so that it is active
                     document.getElementById("copyButton").disabled = false;
 
                 }
+            //if the length is not between 8 and 128 only a message is displayed.     
             else {alert ("Only numbers between 8 and 128 are excepted. Try again.")}
         }
 
         function onClipboardClick()
         {
+            //copy from the textarea into the clipboard
             var tempToClip = document.getElementById("displayText");
             tempToClip.select();
             document.execCommand("copy");
